@@ -1,5 +1,7 @@
 # Spend Sensei V2
 
+## Built with using Next.js, Spend Sensei-v2 is an advanced AI financial advice tool. It allows users to input their income, expenses, and budgets, and receive personalized financial advice based on their financial data. This project integrates AI-driven insights and financial management into a Next.js application.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
