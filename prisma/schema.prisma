@@ -21,12 +21,15 @@ model User {
 }
 
 model Budgets {
-  id     String  @id @default(uuid())
-  name   String
-  amount Float
-  icon   String?
-  userId String
-  user   User    @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+  id        String  @id @default(uuid())
+  name      String
+  amount    Float
+  icon      String?
+  userId    String
+  createdBy User    @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   expenses Expense[]
 
@@ -34,26 +37,32 @@ model Budgets {
 }
 
 model Income {
-  id     Int     @id @default(autoincrement())
+  id     String  @id @default(uuid())
   name   String
-  amount Decimal
+  amount Float
   icon   String?
 
-  userId String
-  user   User   @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+  userId    String
+  createdBy User   @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
 }
 
 model Expense {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @default(uuid())
   name     String
   amount   Float
   budgetId String
   Budgets  Budgets? @relation(fields: [budgetId], references: [id])
 
-  userId String
-  user   User   @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  createdBy User   @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
 
   @@index([userId])
 }
