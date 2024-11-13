@@ -9,7 +9,7 @@ import Link from "next/link";
 const Header = () => {
   const { user, isSignedIn } = useUser();
   return (
-    <div className="p-5 flex justify-between  items -center border shadow-md h-[50px] md:h-[65px]">
+    <div className="p-5 flex justify-between  items -center border shadow-md h-[45px] md:h-[65px]">
       <div className="flex flex-row items-center">
         <Image
           src="/Spend Sensei Logo B.png"
