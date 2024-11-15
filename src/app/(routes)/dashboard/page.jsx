@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { UserButton, useUser } from "@clerk/nextjs";
 import CardInfo from "./_components/CardInfo";
+import { getBudgets } from "@/app/actions/getBudgets";
 
 const Daashboard = () => {
   const { user } = useUser();
@@ -14,6 +15,11 @@ const Daashboard = () => {
   useEffect(() => {
     user && getBudgetList();
   }, [user]);
+
+  const getBudgetList = async () => {
+    const result = await getBudgets();
+    setBudgetList(result);
+  };
 
   return (
     <div className="p-8">
