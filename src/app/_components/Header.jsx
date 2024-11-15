@@ -8,6 +8,7 @@ import Link from "next/link";
 
 const Header = () => {
   const { user, isSignedIn } = useUser();
+  console.log("isSignedIn", isSignedIn);
   return (
     <div className="p-5 flex justify-between  items -center border shadow-md h-[45px] md:h-[65px]">
       <div className="flex flex-row items-center">
@@ -19,19 +20,18 @@ const Header = () => {
         />
       </div>
       {isSignedIn ? (
-        <UserButton />
-      ) : (
         <div className="flex gap-3 items-center">
           <Link href="/dashboard">
             <Button variant="outline" className="rounded-full">
-              {" "}
               Dashboard
             </Button>
           </Link>
-          <Link href="/dashboard">
-            <Button className="rounded-full">Get Started</Button>
-          </Link>
+          <UserButton />
         </div>
+      ) : (
+        <Link href="/sign-in">
+          <Button className="rounded-full">Get Started</Button>
+        </Link>
       )}
     </div>
   );
