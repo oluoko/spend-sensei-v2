@@ -24,7 +24,7 @@ const ShinyButton = ({ text }) => {
         },
       }}
     >
-      <span className="text-gray-700 tracking-wide font-light h-full w-full flex flex-col items-center justify-center relative linear-mask text-sm font-bold md:text-lg">
+      <span className="text-gray-700 tracking-wide h-full w-full flex flex-col items-center justify-center relative linear-mask text-sm font-bold md:text-lg">
         {text}
       </span>
       <span className="block absolute inset-0 rounded-lg p-px linear-overlay" />
