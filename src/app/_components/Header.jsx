@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { useUser, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import ShinyButton from "@/components/ShinyButton/ShinyButton";
 
 const Header = () => {
   const { user, isSignedIn } = useUser();
@@ -19,20 +19,20 @@ const Header = () => {
           height={30}
         />
       </div>
-      {isSignedIn ? (
-        <div className="flex gap-3 items-center">
-          <Link href="/dashboard">
-            <Button variant="outline" className="rounded-full">
-              Dashboard
-            </Button>
+      <div className="flex gap-3 items-center">
+        {isSignedIn ? (
+          <>
+            <Link href="/dashboard">
+              <ShinyButton text="Dashboard" />
+            </Link>
+            <UserButton />
+          </>
+        ) : (
+          <Link href="/sign-in">
+            <ShinyButton text="Get Started" />
           </Link>
-          <UserButton />
-        </div>
-      ) : (
-        <Link href="/sign-in">
-          <Button className="rounded-full">Get Started</Button>
-        </Link>
-      )}
+        )}{" "}
+      </div>
     </div>
   );
 };
