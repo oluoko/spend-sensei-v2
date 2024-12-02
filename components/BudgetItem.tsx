@@ -24,7 +24,9 @@ const BudgetItem = ({ budget, totalSpend, items }) => {
               </h2>
             </div>
           </div>
-          <h2 className="font-bold text-primary text-lg">{budget.amount}</h2>
+          <h2 className="font-bold text-primary text-lg">
+            Ksh {budget.amount}
+          </h2>
         </div>
 
         <div className="mt-5">

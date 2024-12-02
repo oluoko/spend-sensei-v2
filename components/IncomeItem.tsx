@@ -78,8 +78,7 @@ const IncomeItem = ({ budget }) => {
                 </div>
               </div>
               <h2 className="font-bold text-primary text-lg">
-                {" "}
-                ${budget.amount}
+                Ksh {budget.amount}
               </h2>
             </div>
           </div>
