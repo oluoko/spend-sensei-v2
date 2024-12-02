@@ -64,7 +64,7 @@ const Dashboard = async () => {
           <ExpenseListTable expenses={expenseList} />
         </div>
 
-        <div className=" gap-2 w-full hover:bg-slate-400/20 rounded-2xl border border-slate-500/40  p-4 ">
+        <div className=" gap-2 w-full hover:bg-slate-100 rounded-2xl border border-slate-400/30  p-4 ">
           <h2 className="font-bold text-lg">Latest Budget</h2>
 
           <div className="w-full my-2">
