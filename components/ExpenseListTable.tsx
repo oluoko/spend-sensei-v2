@@ -1,10 +1,10 @@
 "use client";
 
-import { Trash } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 import { deleteExpense } from "@/utils/api";
 import { Expense } from "@/utils/types";
+import { Trash, Pen } from "lucide-react";
 
 const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   const onDeleteExpense = async (id: string) => {
@@ -15,6 +15,10 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
       toast.error("Failed to delete expense");
       console.error("Failed to delete expense: ", error);
     }
+  };
+
+  const onEditExpense = (id: string) => {
+    console.log("Edit expense with id: ", id);
   };
 
   // Format date
@@ -45,26 +49,35 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
 
   return (
     <div className="mt-3">
-      <div className="grid grid-cols-4 rounded-tl-xl rounded-tr-xl bg-slate-200 p-2 mt-3 border border-slate-500/40">
+      <div className="grid grid-cols-5 rounded-tl-xl rounded-tr-xl bg-slate-200 p-2 mt-3 border border-slate-500/40">
         <h2 className="font-bold">Name</h2>
         <h2 className="font-bold">Amount</h2>
         <h2 className="font-bold">Date</h2>
-        <h2 className="font-bold">Action</h2>
+        <h2 className="font-bold">Actions</h2>
+        <h2 className="font-bold "></h2>
       </div>
       {expenses.map((expense, index) => (
         <div
           key={index}
-          className="grid grid-cols-4 bg-slate-50  p-2 border border-slate-500/40"
+          className="grid grid-cols-5 gap-[10px] items-center bg-slate-50  p-2 border border-slate-500/40"
         >
-          <h2>{expense.name}</h2>
-          <h2>{expense.amount}</h2>
-          <h2>{formatDate(expense.createdAt)}</h2>
-          <h2
-            onClick={() => onDeleteExpense(expense.id)}
-            className="text-red-500 cursor-pointer"
-          >
-            Delete
-          </h2>
+          <h2 className="">{expense.name}</h2>
+          <h2 className="">{expense.amount}</h2>
+          <h2 className="">{formatDate(expense.createdAt)}</h2>
+          <div className="flex items-center w-full justify-between">
+            <h2
+              onClick={() => onDeleteExpense(expense.id)}
+              className="text-red-500 cursor-pointer flex items-center  "
+            >
+              <Trash className="size-8 p-[6px]" /> Delete
+            </h2>
+            <h2
+              onClick={() => onEditExpense(expense.id)}
+              className="text-red-500 cursor-pointer flex items-center "
+            >
+              <Pen className="size-8 p-[6px]" /> Edit
+            </h2>
+          </div>
         </div>
       ))}
     </div>
