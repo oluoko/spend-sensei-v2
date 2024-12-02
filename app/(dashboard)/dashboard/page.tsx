@@ -64,23 +64,26 @@ const Dashboard = async () => {
           <ExpenseListTable expenses={expenseList} />
         </div>
 
-        <div className="grid gap-2">
+        <div className=" gap-2 w-full hover:bg-slate-400/20 rounded-2xl border border-slate-500/40  p-4 ">
           <h2 className="font-bold text-lg">Latest Budget</h2>
-          {budgetList?.length > 0
-            ? budgetsWithExpenses.map((budget, index) => (
-                <BudgetItem
-                  budget={budget}
-                  key={index}
-                  totalSpend={budget.totalSpend}
-                  items={budget.items}
-                />
-              ))
-            : [1, 2, 3, 4].map((items, index) => (
-                <div
-                  key={index}
-                  className="h-[180px] w-full bg-slate-200 lg animate-pulse"
-                ></div>
-              ))}
+
+          <div className="w-full my-2">
+            {budgetList?.length > 0
+              ? budgetsWithExpenses.map((budget, index) => (
+                  <BudgetItem
+                    budget={budget}
+                    key={index}
+                    totalSpend={budget.totalSpend}
+                    items={budget.items}
+                  />
+                ))
+              : [1, 2].map((items, index) => (
+                  <div
+                    key={index}
+                    className="h-[150px] w-full bg-slate-200 lg animate-pulse"
+                  ></div>
+                ))}
+          </div>
         </div>
       </div>
     </div>
