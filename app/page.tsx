@@ -2,9 +2,10 @@
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
-import ShinyButton from "@/components/ShinyButton";
+
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { UserButton } from "@clerk/nextjs";
+import ShinyButton from "@/components/ShinyButton";
 
 export default function Home() {
   const { userId } = useAuth();
