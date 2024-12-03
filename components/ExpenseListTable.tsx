@@ -25,7 +25,7 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   const formatDate = (date: Date) => {
     const dayOfWeek = date.toLocaleString("en-US", { weekday: "long" });
     const day = date.getDate();
-    const month = date.toLocaleString("en-US", { month: "long" });
+    const month = date.toLocaleString("en-US", { month: "short" });
     const year = date.getFullYear();
 
     const getOrdinalSuffix = (day: number) => {
@@ -48,36 +48,36 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   };
 
   return (
-    <div className="mt-3">
-      <div className="grid grid-cols-5 rounded-tl-xl rounded-tr-xl bg-slate-200 p-2 mt-3 border border-slate-500/40">
-        <h2 className="font-bold text-md md:text-xl">Name</h2>
-        <h2 className="font-bold text-md md:text-xl">Amount</h2>
-        <h2 className="font-bold text-md md:text-xl">Date</h2>
-        <h2 className="font-bold text-md md:text-xl">Actions</h2>
-        <h2 className="font-bold text-md md:text-xl "></h2>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 mt-3 gap-2">
       {expenses.map((expense, index) => (
         <div
           key={index}
-          className="grid grid-cols-5 gap-[10px] items-center bg-slate-50  p-2 border border-slate-500/40"
+          className="grid  rounded-xl  border border-slate-400/30"
         >
-          <h2 className="text-xs md:text-lg">{expense.name}</h2>
-          <h2 className="text-xs md:text-lg">{expense.amount}</h2>
-          <h2 className="text-xs md:text-lg">
-            {formatDate(expense.createdAt)}
-          </h2>
-          <div className="text-xs md:text-lg flex items-center w-full justify-between">
+          <div className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30">
+            <h2 className="text-xl p-1 bg-slate-100 rounded-full">😀</h2>
+            <div className="grid">
+              <h2 className="text-[13px] font-bold">Budget Name</h2>
+              <h2 className="text-[10px]">{formatDate(expense.createdAt)}</h2>
+            </div>
+          </div>
+          <div className="w-full  p-2 md:p-3">
+            <h2 className="text-xs md:text-lg">{expense.name}</h2>
+            <h2 className="text-xs md:text-lg">{expense.amount}</h2>
+          </div>
+
+          <div className="text-xs md:text-lg grid md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-1">
             <h2
               onClick={() => onDeleteExpense(expense.id)}
-              className="text-red-500 cursor-pointer flex items-center  "
+              className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-slate-500/30 hover:border hover:border-slate-400/30 px-2 py-[2px]"
             >
-              <Trash className="size-4 md:size-8 p-[3px] md:p-[6px]" /> Delete
+              <Trash className="size-4 md:size-[20px] " /> Delete
             </h2>
             <h2
               onClick={() => onEditExpense(expense.id)}
-              className="text-red-500 cursor-pointer flex items-center "
+              className="text-black cursor-pointer flex items-center gap-2 rounded-full hover:bg-slate-500/30 hover:border hover:border-slate-400/30 px-2 py-[2px]"
             >
-              <Pen className="size-4 md:size-8 p-[3px] md:p-[6px]" /> Edit
+              <Pen className="size-4 md:size-[20px]" /> Edit
             </h2>
           </div>
         </div>

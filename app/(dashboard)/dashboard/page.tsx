@@ -58,13 +58,13 @@ const Dashboard = async () => {
       />
 
       <div className="grid md:flex mt-3 md:mt-6 gap-2 md:gap-6">
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 w-full md:w-2/3">
           <DashboardBarChart budgets={budgetsWithExpenses} />
 
           <ExpenseListTable expenses={expenseList} />
         </div>
 
-        <div className=" gap-2 w-full hover:bg-slate-100 rounded-2xl border border-slate-400/30  p-4 ">
+        <div className=" gap-2 hover:bg-slate-100 rounded-2xl border border-slate-400/30  p-4 w-full md:w-1/3">
           <h2 className="font-bold text-lg">Latest Budget</h2>
 
           <div className="w-full my-2">

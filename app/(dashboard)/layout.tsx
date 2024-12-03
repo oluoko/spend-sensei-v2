@@ -143,7 +143,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <UserButton afterSignOutUrl="/" />
             </div>
           </header>
-          <div className="flex-1 overflow-auto p-2 md:p-4 h-[calc(100vh-45px)] md:h-[calc(100vh-65px)]">
+          <div className="flex-1 overflow-auto p-0 md:p-4 h-[calc(100vh-45px)] md:h-[calc(100vh-65px)]">
             {children}
           </div>
         </div>
