@@ -57,7 +57,7 @@ const Dashboard = async () => {
         expenses={expenseList}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 mt-6 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-3 md:mt-6 gap-2 md:gap-6">
         <div className="lg:col-span-2">
           <DashboardBarChart budgets={budgetsWithExpenses} />
 
