@@ -5,6 +5,23 @@ import { toast } from "sonner";
 import { deleteExpense } from "@/utils/api";
 import { Expense } from "@/utils/types";
 import { Trash, Pen } from "lucide-react";
+import { prisma } from "@/utils/db";
+
+const getBudgetName = async (id: string) => {
+  const budget = await prisma.budgets.findUnique({
+    where: { id },
+  });
+
+  return budget?.name;
+};
+
+const getBudgetIcon = async (id: string) => {
+  const budget = await prisma.budgets.findUnique({
+    where: { id },
+  });
+
+  return budget?.icon;
+};
 
 const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   const onDeleteExpense = async (id: string) => {
@@ -55,9 +72,13 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
           className="grid  rounded-xl  border border-slate-400/30"
         >
           <div className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30">
-            <h2 className="text-xl p-1 bg-slate-100 rounded-full">😀</h2>
+            <h2 className="text-xl p-1 bg-slate-100 rounded-full">
+              {getBudgetIcon(expense.budgetId)}
+            </h2>
             <div className="grid">
-              <h2 className="text-[13px] font-bold">Budget Name</h2>
+              <h2 className="text-[13px] font-bold">
+                {getBudgetName(expense.budgetId)}
+              </h2>
               <h2 className="text-[10px]">{formatDate(expense.createdAt)}</h2>
             </div>
           </div>
