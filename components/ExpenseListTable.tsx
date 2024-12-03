@@ -50,32 +50,34 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   return (
     <div className="mt-3">
       <div className="grid grid-cols-5 rounded-tl-xl rounded-tr-xl bg-slate-200 p-2 mt-3 border border-slate-500/40">
-        <h2 className="font-bold">Name</h2>
-        <h2 className="font-bold">Amount</h2>
-        <h2 className="font-bold">Date</h2>
-        <h2 className="font-bold">Actions</h2>
-        <h2 className="font-bold "></h2>
+        <h2 className="font-bold text-md md:text-xl">Name</h2>
+        <h2 className="font-bold text-md md:text-xl">Amount</h2>
+        <h2 className="font-bold text-md md:text-xl">Date</h2>
+        <h2 className="font-bold text-md md:text-xl">Actions</h2>
+        <h2 className="font-bold text-md md:text-xl "></h2>
       </div>
       {expenses.map((expense, index) => (
         <div
           key={index}
           className="grid grid-cols-5 gap-[10px] items-center bg-slate-50  p-2 border border-slate-500/40"
         >
-          <h2 className="">{expense.name}</h2>
-          <h2 className="">{expense.amount}</h2>
-          <h2 className="">{formatDate(expense.createdAt)}</h2>
-          <div className="flex items-center w-full justify-between">
+          <h2 className="text-xs md:text-lg">{expense.name}</h2>
+          <h2 className="text-xs md:text-lg">{expense.amount}</h2>
+          <h2 className="text-xs md:text-lg">
+            {formatDate(expense.createdAt)}
+          </h2>
+          <div className="text-xs md:text-lg flex items-center w-full justify-between">
             <h2
               onClick={() => onDeleteExpense(expense.id)}
               className="text-red-500 cursor-pointer flex items-center  "
             >
-              <Trash className="size-8 p-[6px]" /> Delete
+              <Trash className="size-4 md:size-8 p-[3px] md:p-[6px]" /> Delete
             </h2>
             <h2
               onClick={() => onEditExpense(expense.id)}
               className="text-red-500 cursor-pointer flex items-center "
             >
-              <Pen className="size-8 p-[6px]" /> Edit
+              <Pen className="size-4 md:size-8 p-[3px] md:p-[6px]" /> Edit
             </h2>
           </div>
         </div>
