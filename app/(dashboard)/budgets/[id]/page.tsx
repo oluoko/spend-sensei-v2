@@ -19,7 +19,7 @@ import BudgetItem from "@/components/BudgetItem";
 import EditBudget from "@/components/EditBudget";
 import { getUserByClerkId } from "@/utils/auth";
 
-const Expense = async ({ params }) => {
+const Budget = async ({ params }) => {
   const user = await getUserByClerkId();
 
   const budget = await prisma.budgets.findUnique({
@@ -48,7 +48,7 @@ const Expense = async ({ params }) => {
       <h2 className="text-2xl font-bold gap-2 flex justify-between items-center">
         <span className="flex gap-2 items-center">
           <ArrowLeft className="cursor-pointer" />
-          My Expenses
+          {budget?.name} Expenses
         </span>
         <div className="flex gap-2 items-center">
           <EditBudget budget={budget} />
@@ -101,4 +101,4 @@ const Expense = async ({ params }) => {
   );
 };
 
-export default Expense;
+export default Budget;

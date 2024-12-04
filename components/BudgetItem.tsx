@@ -10,7 +10,7 @@ const BudgetItem = ({ budget, totalSpend, items }) => {
   };
 
   return (
-    <Link href={`/expenses/${budget?.id}`}>
+    <Link href={`/budgets/${budget?.id}`}>
       <div className="p-3 my-2 border rounded-2xl hover:shadow-md cursor-pointer h-[150px] bg-white">
         <div className="flex gap-2 items-center justify-between">
           <div className="flex gap-2 items-center">

@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { deleteExpense, getBudgets } from "@/utils/api";
 import { Expense } from "@/utils/types";
 import { Trash, Pen } from "lucide-react";
+import Link from "next/link";
 
 const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   const [budgetMap, setBudgetMap] = React.useState<
@@ -83,7 +84,10 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
             key={index}
             className="grid  rounded-xl  border border-slate-400/30"
           >
-            <div className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30">
+            <Link
+              href={`/budgets/${budget?.id}`}
+              className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30"
+            >
               <h2 className="text-xl p-1 bg-slate-100 rounded-full">
                 {budget?.icon || "📦"}
               </h2>
@@ -93,13 +97,13 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
                 </h2>
                 <h2 className="text-[10px]">{formatDate(expense.createdAt)}</h2>
               </div>
-            </div>
+            </Link>
             <div className="w-full  p-2 md:p-3">
               <h2 className="text-xs md:text-lg">{expense.name}</h2>
               <h2 className="text-xs md:text-lg">{expense.amount}</h2>
             </div>
 
-            <div className="text-xs md:text-lg grid md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-1">
+            <div className="text-xs md:text-lg md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-1">
               <h2
                 onClick={() => onDeleteExpense(expense.id)}
                 className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-slate-500/30 hover:border hover:border-slate-400/30 px-2 py-[2px]"
