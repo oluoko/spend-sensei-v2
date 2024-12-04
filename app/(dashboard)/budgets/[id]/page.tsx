@@ -66,7 +66,10 @@ const Budget = ({ params }) => {
       <div className="p-10">
         <h2 className="text-2xl font-bold gap-2 flex justify-between items-center">
           <span className="flex gap-2 items-center text-lg md:text-2xl">
-            <ArrowLeft className="cursor-pointer" />
+            <ArrowLeft
+              className="cursor-pointer"
+              onClick={() => router.back()}
+            />
             {budget?.name}{" "}
             <span className="text-slate-700/60 text-md md:text-lg">
               Expenses

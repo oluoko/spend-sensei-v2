@@ -1,7 +1,6 @@
 import ExpenseListTable from "@/components/ExpenseListTable";
 import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
-import { Expense } from "@/utils/types";
 
 const Expenses = async () => {
   const user = await getUserByClerkId();
