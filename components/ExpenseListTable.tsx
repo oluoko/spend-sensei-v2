@@ -105,7 +105,7 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
               <h2 className="text-xs md:text-lg">{expense.amount}</h2>
             </div>
 
-            <div className="text-xs md:text-lg md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-[8px]">
+            <div className="text-xs md:text-lg flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-[8px]">
               <h2
                 onClick={() => onDeleteExpense(expense.id)}
                 className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-red-500 hover:text-white border border-red-500 px-2"

@@ -17,12 +17,12 @@ const DeleteConfirmation = ({ subject, component, onConfirm, onCancel }) => {
   return (
     <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
       <div className=" bg-white border border-slate-400/30 p-6 rounded-xl shadow-xl shadow-slate-300/10 w-[90%] md:w-[50%]">
-        <h2 className="text-xl font-semibold mb-4 text-slate-700/60">
+        <h2 className="text-xl font-semibold mb-4 text-slate-800/60">
           Are you sure you want to delete this {component}?
         </h2>
-        <p className="mb-2 text-slate-700/60">
+        <p className="mb-2 text-slate-800/60">
           Type{" "}
-          <strong className="font-bold text-xl text-white">{subject}</strong> to
+          <strong className="font-bold text-xl text-black">{subject}</strong> to
           confirm deletion.
         </p>
 
