@@ -218,3 +218,24 @@ export const deleteIncome = async (id: string) => {
     throw error;
   }
 };
+
+export const getBudgets = async () => {
+  try {
+    const res = await fetch(
+      new Request(createURL("/api/budgets"), {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Failed to fetch budgets");
+    }
+
+    const responseData = await res.json(); // Rename to avoid shadowing
+    return responseData.data as Budget[];
+  } catch (error) {
+    console.error("Error in getBudgets in @utils/api: getBudgets: ", error);
+    throw error;
+  }
+};

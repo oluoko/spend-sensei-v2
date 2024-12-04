@@ -50,3 +50,25 @@ export const POST = async (req: Request) => {
     );
   }
 };
+
+export const GET = async (req: Request) => {
+  try {
+    const user = await getUserByClerkId();
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const budgets = await prisma.budgets.findMany({
+      where: { userId: user.id },
+    });
+
+    return NextResponse.json({ data: budgets });
+  } catch (error) {
+    console.error("Error in GET /api/budgets:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch budgets in GET /api/budgets" },
+      { status: 500 }
+    );
+  }
+};

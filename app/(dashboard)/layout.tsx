@@ -1,7 +1,5 @@
 "use client";
 
-import { HomeIcon, BookOpenIcon, ClockIcon } from "@heroicons/react/24/outline";
-
 import { ReactNode } from "react";
 import CreatorImage from "@/components/CreatorImage";
 import { UserButton, useUser } from "@clerk/nextjs";
