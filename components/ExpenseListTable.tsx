@@ -1,18 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { deleteExpense, getBudgets } from "@/utils/api";
 import { Expense } from "@/utils/types";
 import { Trash, Pen } from "lucide-react";
 import Link from "next/link";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
-  const [budgetMap, setBudgetMap] = React.useState<
+  const [budgetMap, setBudgetMap] = useState<
     Record<string, { name: string; icon: string }>
   >({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [expenseToDelete, setExpenseToDelete] = useState(null);
 
-  React.useEffect(() => {
+  const truncate = (str, words) => {
+    const truncatedWords = str.split(" ").slice(0, words).join(" ");
+    return truncatedWords;
+  };
+
+  useEffect(() => {
     const fetchBudgets = async () => {
       try {
         const budgets = await getBudgets();
@@ -35,13 +44,21 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
     fetchBudgets();
   }, []);
 
-  const onDeleteExpense = async (id: string) => {
+  const handleDeleteClick = (expense) => {
+    setExpenseToDelete(expense);
+    setIsDeleting(true);
+  };
+
+  const onDeleteExpense = async (expenseToDelete) => {
     try {
-      await deleteExpense(id);
-      toast.success("Expense deleted successfully");
+      await deleteExpense(expenseToDelete.id);
+      toast.success("Budget deleted successfully");
+      window.location.reload();
+      setIsDeleting(false);
     } catch (error) {
-      toast.error("Failed to delete expense");
-      console.error("Failed to delete expense: ", error);
+      toast.error("Failed to delete budget");
+      console.error("Failed to delete budget: ", error);
+      setIsDeleting(false);
     }
   };
 
@@ -77,52 +94,63 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 mt-3 gap-2">
-      {expenses.map((expense, index) => {
-        const budget = budgetMap[expense.budgetId];
-
-        return (
-          <div
-            key={index}
-            className="grid  rounded-xl  border border-slate-400/30"
-          >
-            <Link
-              href={`/budgets/${expense.budgetId}`}
-              className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30"
+    <>
+      {isDeleting && expenseToDelete && (
+        <DeleteConfirmation
+          component="Expense"
+          subject={expenseToDelete.name}
+          onConfirm={onDeleteExpense(expenseToDelete)}
+          onCancel={() => setIsDeleting(false)}
+        />
+      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-3 gap-2">
+        {expenses.map((expense, index) => {
+          const budget = budgetMap[expense.budgetId];
+          return (
+            <div
+              key={index}
+              className="grid  rounded-xl  border border-slate-400/30"
             >
-              <h2 className="text-xl p-1 bg-slate-100 rounded-full">
-                {budget?.icon || "📦"}
-              </h2>
-              <div className="grid">
-                <h2 className="text-[13px] font-bold">
-                  {budget?.name || "Unknown Budget"}
+              <Link
+                href={`/budgets/${expense.budgetId}`}
+                className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30"
+              >
+                <h2 className="text-xl p-1 bg-slate-100 rounded-full">
+                  {budget?.icon || "📦"}
                 </h2>
-                <h2 className="text-[10px]">{formatDate(expense.createdAt)}</h2>
+                <div className="grid">
+                  <h2 className="text-[13px] font-bold">
+                    {budget?.name || "Unknown Budget"}
+                  </h2>
+                  <h2 className="text-[10px]">
+                    {formatDate(expense.createdAt)}
+                  </h2>
+                </div>
+              </Link>
+              <div className="w-full  p-2 md:p-3">
+                <h2 className="text-xs md:text-lg">{expense.name}</h2>
+                <h2 className="text-xs md:text-lg">{expense.amount}</h2>
               </div>
-            </Link>
-            <div className="w-full  p-2 md:p-3">
-              <h2 className="text-xs md:text-lg">{expense.name}</h2>
-              <h2 className="text-xs md:text-lg">{expense.amount}</h2>
-            </div>
 
-            <div className="text-xs md:text-lg flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-[8px]">
-              <h2
-                onClick={() => onDeleteExpense(expense.id)}
-                className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-red-500 hover:text-white border border-red-500 px-2"
-              >
-                <Trash className="size-4 md:size-[20px] " /> Delete
-              </h2>
-              <h2
-                onClick={() => onEditExpense(expense.id)}
-                className="text-black cursor-pointer flex items-center gap-2 rounded-full hover:bg-black border hover:text-white border-black px-2 "
-              >
-                <Pen className="size-4 md:size-[20px]" /> Edit
-              </h2>
+              <div className="text-xs md:text-lg flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-[8px]">
+                <h2
+                  onClick={() => handleDeleteClick(expense)}
+                  className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-red-500 hover:text-white border border-red-500 px-2"
+                >
+                  <Trash className="size-4 md:size-[20px] " /> Delete
+                </h2>
+                <h2
+                  onClick={() => setIsEditing(true)}
+                  className="text-black cursor-pointer flex items-center gap-2 rounded-full hover:bg-black border hover:text-white border-black px-2 "
+                >
+                  <Pen className="size-4 md:size-[20px]" /> Edit
+                </h2>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

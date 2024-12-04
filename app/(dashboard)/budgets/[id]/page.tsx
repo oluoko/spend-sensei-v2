@@ -31,7 +31,6 @@ const Budget = ({ params }) => {
       const { budget, expenses } = budgetWithExpenses;
       setBudget(budget);
       setExpenses(expenses);
-      console.log("Expenses: ", expenses);
     };
 
     fetchBudget();
