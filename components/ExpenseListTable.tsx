@@ -49,11 +49,14 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
     console.log("Edit expense with id: ", id);
   };
 
-  const formatDate = (date: Date) => {
-    const dayOfWeek = date.toLocaleString("en-US", { weekday: "long" });
-    const day = date.getDate();
-    const month = date.toLocaleString("en-US", { month: "short" });
-    const year = date.getFullYear();
+  const formatDate = (date: Date | string) => {
+    // Convert to a Date object if date is a string
+    const validDate = typeof date === "string" ? new Date(date) : date;
+
+    const dayOfWeek = validDate.toLocaleString("en-US", { weekday: "long" });
+    const day = validDate.getDate();
+    const month = validDate.toLocaleString("en-US", { month: "short" });
+    const year = validDate.getFullYear();
 
     const getOrdinalSuffix = (day: number) => {
       if (day > 3 && day < 21) return "th";
@@ -70,7 +73,6 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
     };
 
     const dayWithSuffix = `${day}${getOrdinalSuffix(day)}`;
-
     return `${dayOfWeek}, ${dayWithSuffix} ${month}, ${year}`;
   };
 
@@ -85,7 +87,7 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
             className="grid  rounded-xl  border border-slate-400/30"
           >
             <Link
-              href={`/budgets/${budget?.id}`}
+              href={`/budgets/${expense.budgetId}`}
               className="w-full  p-2 md:p-3 flex gap-2  rounded-t-xl border-b border-slate-400/30"
             >
               <h2 className="text-xl p-1 bg-slate-100 rounded-full">
@@ -103,16 +105,16 @@ const ExpenseListTable = ({ expenses }: { expenses: Expense[] }) => {
               <h2 className="text-xs md:text-lg">{expense.amount}</h2>
             </div>
 
-            <div className="text-xs md:text-lg md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-1">
+            <div className="text-xs md:text-lg md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-[8px]">
               <h2
                 onClick={() => onDeleteExpense(expense.id)}
-                className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-slate-500/30 hover:border hover:border-slate-400/30 px-2 py-[2px]"
+                className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-red-500 hover:text-white border border-red-500 px-2"
               >
                 <Trash className="size-4 md:size-[20px] " /> Delete
               </h2>
               <h2
                 onClick={() => onEditExpense(expense.id)}
-                className="text-black cursor-pointer flex items-center gap-2 rounded-full hover:bg-slate-500/30 hover:border hover:border-slate-400/30 px-2 py-[2px]"
+                className="text-black cursor-pointer flex items-center gap-2 rounded-full hover:bg-black border hover:text-white border-black px-2 "
               >
                 <Pen className="size-4 md:size-[20px]" /> Edit
               </h2>

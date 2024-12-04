@@ -71,3 +71,26 @@ export const DELETE = async (req: Request, { params }) => {
     );
   }
 };
+
+export const GET = async (req: Request, { params }) => {
+  const user = await getUserByClerkId();
+
+  const budget = await prisma.budgets.findUnique({
+    where: {
+      id: params.id,
+      userId: user.id,
+    },
+  });
+
+  if (!budget) {
+    return NextResponse.json({ error: "Budget not found" }, { status: 404 });
+  }
+
+  const expenses = await prisma.expense.findMany({
+    where: {
+      budgetId: params.id,
+    },
+  });
+
+  return NextResponse.json({ data: { budget, expenses } });
+};

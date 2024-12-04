@@ -239,3 +239,51 @@ export const getBudgets = async () => {
     throw error;
   }
 };
+
+export const getBudgetById = async (id: string) => {
+  try {
+    const res = await fetch(
+      new Request(createURL(`/api/budgets/${id}`), {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Failed to fetch budget");
+    }
+
+    const responseData = await res.json(); // Rename to avoid shadowing
+    return responseData.data as Budget;
+  } catch (error) {
+    console.error(
+      "Error in getBudgetById in @utils/api: getBudgetById: ",
+      error
+    );
+    throw error;
+  }
+};
+
+export const getExpensesByBudgetId = async (id: string) => {
+  try {
+    const res = await fetch(
+      new Request(createURL(`/api/budgets/${id}/expenses`), {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Failed to fetch expenses");
+    }
+
+    const responseData = await res.json(); // Rename to avoid shadowing
+    return responseData.data as Expense[];
+  } catch (error) {
+    console.error(
+      "Error in getExpensesByBudgetId in @utils/api: getExpensesByBudgetId: ",
+      error
+    );
+    throw error;
+  }
+};

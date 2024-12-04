@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Pen, PenBox, Trash } from "lucide-react";
 import {
@@ -12,35 +14,44 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { prisma } from "@/utils/db";
 import ExpenseListTable from "@/components/ExpenseListTable";
 import AddExpense from "@/components/AddExpense";
 import BudgetItem from "@/components/BudgetItem";
 import EditBudget from "@/components/EditBudget";
-import { getUserByClerkId } from "@/utils/auth";
+import { deleteBudget, getBudgetById } from "@/utils/api";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const Budget = async ({ params }) => {
-  const user = await getUserByClerkId();
+const Budget = ({ params }) => {
+  const [budget, setBudget] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const router = useRouter();
 
-  const budget = await prisma.budgets.findUnique({
-    where: {
-      id: params.id,
-      userId: user?.id,
-    },
-  });
+  useEffect(() => {
+    const fetchBudget = async () => {
+      const budgetWithExpenses = await getBudgetById(params?.id);
+      const { budget, expenses } = budgetWithExpenses;
+      setBudget(budget);
+      setExpenses(expenses);
+      console.log("Expenses: ", expenses);
+    };
 
-  const expenses = await prisma.expense.findMany({
-    where: {
-      budgetId: params.id,
-    },
-  });
+    fetchBudget();
+  }, []);
 
   // function to find total expenses
   const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0);
   const items = expenses.length;
 
-  const deleteBudget = async () => {
-    console.log("Deleting budget");
+  const onDeleteBudget = async () => {
+    try {
+      await deleteBudget(params?.id);
+      toast.success("Budget deleted successfully");
+      router.push("/budgets");
+    } catch (error) {
+      toast.error("Failed to delete budget");
+      console.error("Failed to delete budget: ", error);
+    }
   };
 
   return (
@@ -55,7 +66,11 @@ const Budget = async ({ params }) => {
 
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button className="flex gap-2 rounded-full" variant="destructive">
+              <Button
+                className="flex gap-2 rounded-full"
+                variant="destructive"
+                onClick={() => onDeleteBudget()}
+              >
                 <Trash className="w-4" /> Delete
               </Button>
             </AlertDialogTrigger>
