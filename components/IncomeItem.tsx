@@ -26,6 +26,7 @@ import {
 } from "@radix-ui/react-dialog";
 import { DialogClose, DialogFooter, DialogHeader } from "./ui/dialog";
 import { useState } from "react";
+import { Pen, Trash } from "lucide-react";
 
 const IncomeItem = ({ budget }) => {
   const [emojiIcon, setEmojiIcon] = useState("😀");
@@ -52,89 +53,40 @@ const IncomeItem = ({ budget }) => {
       setLoading(false);
     }
   };
-  console.log("Budget: ", budget);
+
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <div
-            className="p-5 border rounded-2xl
-    hover:shadow-md cursor-pointer h-[150px]"
-          >
-            <div className="flex gap-2 items-center justify-between">
-              <div className="flex gap-2 items-center">
-                <h2
-                  className="text-xl p-2
+    <div
+      className="border rounded-2xl
+    hover:shadow-md cursor-pointer h-[150px] flex flex-col justify-between"
+    >
+      <div className="flex gap-2 items-center justify-between px-2 md:px-3 py-[8px]">
+        <div className="flex gap-2 items-center">
+          <h2
+            className="text-xl p-2
               bg-slate-100 rounded-full 
               "
-                >
-                  {budget?.icon}
-                </h2>
-                <div>
-                  <h2 className="font-bold">{budget.name}</h2>
-                  <h2 className="text-sm text-gray-500">
-                    {budget.totalItem} Item
-                  </h2>
-                </div>
-              </div>
-              <h2 className="font-bold text-primary text-lg">
-                Ksh {budget.amount}
-              </h2>
-            </div>
+          >
+            {budget?.icon}
+          </h2>
+          <div>
+            <h2 className="font-bold">{budget.name}</h2>
+            <h2 className="text-sm text-gray-500">
+              {budget.totalItem
+                ? `${budget.totalItem} item(s)`
+                : "No Items Yet"}
+            </h2>
           </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Update Income Source</DialogTitle>
-            <DialogDescription>
-              <div className="mt-5">
-                <Button
-                  variant="outline"
-                  className="text-lg"
-                  onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
-                >
-                  {emojiIcon}
-                </Button>
-                <div className="absolute z-20">
-                  <EmojiPicker
-                    open={openEmojiPicker}
-                    onEmojiClick={(e) => {
-                      setEmojiIcon(e.emoji);
-                      setOpenEmojiPicker(false);
-                    }}
-                  />
-                </div>
-                <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Source Name</h2>
-                  <Input
-                    placeholder="e.g. Youtube"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Montly Amount</h2>
-                  <Input
-                    type="number"
-                    placeholder="e.g. 5000$"
-                    onChange={(e) => setAmount(Number(e.target.value))}
-                  />
-                </div>
-              </div>
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
-              <Button
-                disabled={!(name && amount)}
-                onClick={() => onIncomeUpdate()}
-                className="mt-5 w-full rounded-full"
-              >
-                Create Income Source
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </div>
+        <h2 className="font-bold text-primary text-lg">Ksh {budget.amount}</h2>
+      </div>
+      <div className="text-xs md:text-lg md:flex items-center w-full justify-between border-t border-slate-400/30 px-2 md:px-3 py-[8px]">
+        <h2 className="text-red-500 cursor-pointer flex items-center gap-2 rounded-full hover:bg-red-500 hover:text-white border border-red-500 px-2">
+          <Trash className="size-4 md:size-[20px] " /> Delete
+        </h2>
+        <h2 className="text-black cursor-pointer flex items-center gap-2 rounded-full hover:bg-black border hover:text-white border-black px-2 ">
+          <Pen className="size-4 md:size-[20px]" /> Edit
+        </h2>
+      </div>
     </div>
   );
 };

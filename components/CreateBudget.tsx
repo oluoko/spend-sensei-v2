@@ -17,9 +17,11 @@ import EmojiPicker from "emoji-picker-react";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { createNewBudget } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const CreateBudget = () => {
   const user = useUser();
+  const router = useRouter();
   const [emojiIcon, setEmojiIcon] = useState("😀");
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,9 +41,9 @@ const CreateBudget = () => {
 
     try {
       setLoading(true);
-      await createNewBudget({ name, amount, icon: emojiIcon });
+      const budget = await createNewBudget({ name, amount, icon: emojiIcon });
       toast.success("Budget created successfully");
-      window.location.reload();
+      router.push(`/budgets/${budget.id}`);
     } catch (error) {
       toast.error("Failed to create budget");
       console.error("Failed to create budget: ", error);

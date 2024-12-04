@@ -115,7 +115,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 {isSidebarOpen ? (
                   <>
                     <item.icon />
-                    <p>{item.label}</p>
+                    <p className={`${path == item.href && "text-lg"} text-md`}>
+                      {item.label}
+                    </p>
                   </>
                 ) : (
                   <item.icon />
